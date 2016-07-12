@@ -19,11 +19,11 @@ export default class Media extends Component {
 
     this.onChange = this.props.blockProps.onChange;
     this.block = this.props.block;
-    this.entityKey = this.block.getEntityAt(0);
+    // this.entityKey = this.block.getEntityAt(0);
 
-    const entity = Entity.get(this.entityKey);
+    // const entity = Entity.get(this.entityKey);
     this.state = {
-      entityData: entity.getData()
+      entityData: this.block.getData().toObject()
     };
   }
 

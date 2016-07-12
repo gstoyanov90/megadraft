@@ -5,7 +5,7 @@
  */
 
 import React, {Component} from "react";
-import Draft, {Entity, Editor, RichUtils, getDefaultKeyBinding } from "draft-js";
+import Draft, {Entity, Editor, RichUtils, getDefaultKeyBinding, convertFromHTML } from "draft-js";
 
 import icons from "./icons";
 import * as plugin from "./components/plugin";
@@ -20,6 +20,12 @@ import MediaMessage from "./components/MediaMessage";
 export default class Megadraft extends Component {
   constructor(props) {
     super(props);
+
+    console.log(1231)
+    const text = "As instituições de educação superior devem inscrever os estudantes habilitados ao Exame Nacional de Desempenho de Estudantes (Enade) de 2016 até 7 de agosto, <a href='http://enadeies.inep.gov.br/enadeIes/'>pelo site. O exame é obrigatório e avalia o conhecimento dos alunos que estão concluindo o ensino superior.</a>";
+    console.log(convertFromHTML(text)[0].toJS());
+
+
 
     this.state = {
       readOnly: this.props.readOnly || false
@@ -94,9 +100,7 @@ export default class Megadraft extends Component {
 
   mediaBlockRenderer(block) {
     if (block.getType() === "atomic") {
-      const entityKey = block.getEntityAt(0);
-      const entity = Entity.get(entityKey);
-      const type = entity.getType();
+      const type = block.getData().toObject().type;
 
       for (let plugin of this.plugins) {
         if (type === plugin.type) {
@@ -141,7 +145,7 @@ export default class Megadraft extends Component {
             readOnly={this.state.readOnly}
             plugins={plugins}
             blockRendererFn={this.mediaBlockRenderer}
-            blockStyleFn={this.blockStyleFn}
+            blockFn={this.blockStyleFn}
             handleKeyCommand={this.handleKeyCommand}
             handleReturn={this.handleReturn}
             stripPastedStyles={stripPastedStyles}

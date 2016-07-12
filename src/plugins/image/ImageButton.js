@@ -9,6 +9,8 @@ import {Entity, AtomicBlockUtils} from "draft-js";
 
 import icons from "../../icons";
 
+import blah from "../../insertDataBlock";
+
 
 export default class BlockButton extends Component {
   constructor(props) {
@@ -23,13 +25,16 @@ export default class BlockButton extends Component {
       return;
     }
 
-    const entityKey = Entity.create("image", "IMMUTABLE", {src});
+    this.props.onChange(blah.insertAtomicBlock(this.props.editorState, {src}))
+    console.log(123)
 
-    this.props.onChange(AtomicBlockUtils.insertAtomicBlock(
-      this.props.editorState,
-      entityKey,
-      "🍺"
-    ));
+    // const entityKey = Entity.create("image", "IMMUTABLE", {src});
+
+    // this.props.onChange(AtomicBlockUtils.insertAtomicBlock(
+    //   this.props.editorState,
+    //   entityKey,
+    //   "🍺"
+    // ));
   }
 
   render() {
